@@ -7,29 +7,27 @@ logstash_repo_https_apt_support:
 
 logstash-repo:
   pkgrepo.managed:
-    - humanname: Logstash Repo
-    - name: deb https://packages.elastic.co/logstash/{{logstash.repoversion}}/debian stable main
-    - file: /etc/apt/sources.list.d/beats.list
+    - humanname: "Elastic repository for {{ logstash.repoversion }} packages"
+    - name: deb https://artifacts.elastic.co/packages/{{ logstash.repoversion }}/apt stable main
+    - file: /etc/apt/sources.list.d/elastic.list
     - gpgcheck: 1
-    - key_url: https://packages.elastic.co/GPG-KEY-elasticsearch
+    - key_url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
     - require:
       - pkg: apt-transport-https
-    - require_in:
-      - pkg: logstash
 
 {%- elif grains['os_family'] == 'RedHat' %}
 logstash-repo-key:
   cmd.run:
-    - name:  rpm --import http://packages.elasticsearch.org/GPG-KEY-elasticsearch
-    - unless: rpm -qi gpg-pubkey-d88e42b4-52371eca
+    - name:  rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
 
 logstash-repo:
   pkgrepo.managed:
-    - humanname: logstash repository for {{logstash.repoversion}}.x packages
-    - baseurl: http://packages.elasticsearch.org/logstash/{{logstash.repoversion}}/centos
+    - name: elastic
+    - humanname: "Elastic repository for {{ logstash.repoversion }} packages"
+    - baseurl: https://artifacts.elastic.co/packages/{{ logstash.repoversion }}/yum
+    - gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
     - gpgcheck: 1
-    - gpgkey: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
-    - enabled: 1
+    - disabled: False
     - require:
       - cmd: logstash-repo-key
 {%- endif %}

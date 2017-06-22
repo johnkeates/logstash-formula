@@ -6,7 +6,7 @@ logstash:
   svc: "logstash"
   pkgstate: "latest"
   indent: 4
-  repoversion: "2.3"
+  repoversion: "5.x"
   configfile: "/etc/logstash/logstash.conf"
   configdir: "/etc/logstash/"
   service:
