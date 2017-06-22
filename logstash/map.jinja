@@ -9,10 +9,12 @@ Setup variable using grains['os_family'] based logic, only add key:values here
 that differ from whats in defaults.yaml
 ##}
 {% set os_family_map = salt['grains.filter_by']({
-        'Debian': {},
-        'Suse': {},
-        'Arch': {},
-        'RedHat': {},
+        'Debian': {
+            'sysconfig_file': '/etc/default/logstash'
+        },
+        'RedHat': {
+            'sysconfig_file': '/etc/sysconfig/logstash'
+        },
   }
   , grain="os_family"
   , merge=salt['pillar.get']('logstash:lookup'))
