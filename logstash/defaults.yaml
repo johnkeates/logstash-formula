@@ -11,3 +11,14 @@ logstash:
   configdir: "/etc/logstash/"
   service:
     name: logstash
+  jvm_opts:
+    - "-Dfile.encoding=UTF-8"
+    - "-Djava.awt.headless=true"
+    - "-Xms256m"
+    - "-Xmx1g"
+    - "-XX:CMSInitiatingOccupancyFraction=75"
+    - "-XX:+DisableExplicitGC"
+    - "-XX:+HeapDumpOnOutOfMemoryError"
+    - "-XX:+UseCMSInitiatingOccupancyOnly"
+    - "-XX:+UseConcMarkSweepGC"
+    - "-XX:+UseParNewGC"
