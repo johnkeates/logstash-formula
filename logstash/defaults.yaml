@@ -22,3 +22,7 @@ logstash:
     - "-XX:+UseCMSInitiatingOccupancyOnly"
     - "-XX:+UseConcMarkSweepGC"
     - "-XX:+UseParNewGC"
+  config:
+    path.config: /etc/logstash/conf.d
+    path.data: /var/lib/logstash
+    path.logs: /var/log/logstash
