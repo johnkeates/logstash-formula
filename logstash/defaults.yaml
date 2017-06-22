@@ -38,3 +38,4 @@ logstash:
     LS_NICE: "19"
     SERVICE_NAME: "logstash"
     SERVICE_DESCRIPTION: "logstash"
+  patterns: {}

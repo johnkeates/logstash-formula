@@ -66,3 +66,10 @@ logstash:
     path.logs: /var/log/logstash
     queue.max_bytes: 4gb
     queue.type: persisted
+  patterns:
+    syslog:
+      - 'SYSLOGBASE %{SYSLOGTIMESTAMP:timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:message}'
+    salt:
+      - 'SALTLOG_LEVEL (?:DEBUG|FATAL|ERROR|WARNING|INFO)'
+      - 'SALTCMD @?[a-z]\w+(?:\.@?[a-z]\w+)*'
+      - 'SALTLOGBASE %{TIMESTAMP_ISO8601:timestamp} \[%{SALTCMD:saltcmd}(?:([ \t]+)?)\]\[%{SALTLOG_LEVEL:priority}(?:[ \t]+)\] %{GREEDYDATA:message}'
