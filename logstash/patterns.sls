@@ -8,7 +8,7 @@
     - mode: 0644
     - user: root
     - group: root
-    {% if pattern %}
+    {% if patterns %}
     - contents:
       {% for pattern in patterns %}
         - {{ pattern }}
