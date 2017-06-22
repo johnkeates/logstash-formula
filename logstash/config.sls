@@ -1,28 +1,13 @@
 {%- from 'logstash/map.jinja' import logstash with context %}
 
-# This gets around a user permissions bug with the logstash user/group
-# being able to read /var/log/syslog, even if the group is properly set for
-# the account. The group needs to be defined as 'adm' in the init script,
-# so we'll do a pattern replace.
-
-{%- if salt['grains.get']('os_family', None) == "Debian" %}
-change service group in Ubuntu init script:
-  file.replace:
-    - name: /etc/init.d/logstash
-    - pattern: "LS_GROUP=logstash"
-    - repl: "LS_GROUP=adm"
-    - watch_in:
-      - service: logstash-svc
-
-add adm group to logstash service account:
-  user.present:
-    - name: logstash
-    - groups:
-      - logstash
-      - adm
-    - require:
-      - pkg: logstash-pkg
-{%- endif %}
+logstash-config:
+  file.serialize:
+    - name: /etc/logstash/logstash.yml
+    - dataset: {{ logstash.config }}
+    - formatter: yaml
+    - user: root
+    - group: root
+    - mode: 0644
 
 {%- if logstash.inputs is defined %}
 logstash-config-inputs:

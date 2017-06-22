@@ -6,8 +6,36 @@ logstash:
   svc: "logstash"
   pkgstate: "latest"
   indent: 4
-  repoversion: "2.3"
+  repoversion: "5.x"
   configfile: "/etc/logstash/logstash.conf"
   configdir: "/etc/logstash/"
   service:
     name: logstash
+  jvm_opts:
+    - "-Dfile.encoding=UTF-8"
+    - "-Djava.awt.headless=true"
+    - "-Xms256m"
+    - "-Xmx1g"
+    - "-XX:CMSInitiatingOccupancyFraction=75"
+    - "-XX:+DisableExplicitGC"
+    - "-XX:+HeapDumpOnOutOfMemoryError"
+    - "-XX:+UseCMSInitiatingOccupancyOnly"
+    - "-XX:+UseConcMarkSweepGC"
+    - "-XX:+UseParNewGC"
+  config:
+    path.config: /etc/logstash/conf.d
+    path.data: /var/lib/logstash
+    path.logs: /var/log/logstash
+  sysconfig:
+    JAVACMD: "/usr/bin/java"
+    LS_HOME: "/usr/share/logstash"
+    LS_SETTINGS_DIR: "/etc/logstash"
+    LS_PIDFILE: "/var/run/logstash.pid"
+    LS_USER: "logstash"
+    LS_GROUP: "logstash"
+    LS_GC_LOG_FILE: "/var/log/logstash/gc.log"
+    LS_OPEN_FILES: "16384"
+    LS_NICE: "19"
+    SERVICE_NAME: "logstash"
+    SERVICE_DESCRIPTION: "logstash"
+  patterns: {}
