@@ -8,5 +8,6 @@ include:
   - .repo
   - .install
   - .config
+  - .sysconfig
   - .jvmoptions
   - .service
